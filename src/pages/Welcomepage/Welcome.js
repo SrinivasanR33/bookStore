@@ -1,9 +1,10 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./welcome.css";
 function Welcome() {
   const dispatch=useDispatch()
+  const { loginState } = useSelector((state) => state.global);
   return (
     <Box
       sx={{
@@ -41,10 +42,15 @@ function Welcome() {
           <Button sx={{ textTransform: "capitalize",backgroundColor:'orange',":hover":{
             backgroundColor:'black',
             color:"#fff"
-          } }} variant="contained" size="large" onClick={()=>{ dispatch({
+          } }} variant="contained" size="large" onClick={()=>{if(loginState){ dispatch({
             type: "MAIN_SCREEN_OPTION",
             payload: 3,
-          });}}>
+          })}else{
+            dispatch({
+              type: "MAIN_SCREEN_OPTION",
+              payload: 1,
+            }) 
+          }}}>
             Get Started
           </Button>
         </Box>
